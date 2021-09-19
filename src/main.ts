@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 const gameBoard = (function(){
-    const X_CLASS = 'x';
-    const CIRCLE_CLASS = 'circle';
+    const X_CLASS:string = 'x';
+    const CIRCLE_CLASS:string = 'circle';
     let winningPositions=[
         [0,1,2],
         [3,4,5],
@@ -13,11 +13,11 @@ const gameBoard = (function(){
         [2,5,8]
     ];
     let circleTurn:boolean;
-    const cells = document.querySelectorAll('[data-cell]');
-    const restartButton = document.getElementById('restartButton');
-    const winningMessageElement = document.getElementById('winner-message');
-    const winningMessageTextElement = document.querySelector('[data-message]');
-    const whoPlaysMessage = document.getElementById('who-plays');
+    const cells:NodeListOf<Element> = document.querySelectorAll('[data-cell]');
+    const restartButton:HTMLElement = document.getElementById('restartButton')!;
+    const winningMessageElement:HTMLElement = document.getElementById('winner-message')!;
+    const winningMessageTextElement:Element = document.querySelector('[data-message]')!;
+    const whoPlaysMessage:HTMLElement = document.getElementById('who-plays')!;
 
     // @ts-ignore
     restartButton.addEventListener('click',startGame);
@@ -44,12 +44,30 @@ const gameBoard = (function(){
             endGame(true);
         } else {
             swapTurns();
+            let availableCells = getAvailableCells();
+            let computerChoiceCell = computerPlay(availableCells);
+            let computerChoiceCellNum = computerChoiceCell.getAttribute("data-num");
+            let ele:HTMLElement = document.querySelector(`[data-num="${computerChoiceCellNum}"]`)!;
+            if (circleTurn){
+                ele.click();
+                console.log(ele);
+            }
         }
     }
 
-
+    function getAvailableCells(){
+        let availableCells = Array.from(cells).filter((cell)=>{
+            return cell.className =='cell';
+        });
+        return availableCells;
+    }
+    function computerPlay(availableCells:Element[]){
+        let randomCell = Math.floor(Math.random() * availableCells.length);
+        return availableCells[randomCell];
+    }
     function placeMark(cell:any, currentClass:any) {
         cell.classList.add(currentClass);
+
     }
     function checkWin(currentClass:any) {
         return winningPositions.some(combination => {
