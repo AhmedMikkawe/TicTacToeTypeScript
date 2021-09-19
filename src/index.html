@@ -6,5 +6,30 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
+<div class="header">
+    <div class="container">
+        <h1 class="f-5 align-center">Tic Tac Toe</h1>
+    </div>
+</div>
+<div class="board">
+    <div class="container">
+        <h2 id="who-plays" class="who-plays"></h2>
+        <div class="grid">
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+    </div>
+</div>
+<div id="winner-message" class="winner-message hide">
+    <h2 data-message>is winner</h2>
+    <button id="restartButton" class="button">Restart</button>
+</div>
 </body>
 </html>
